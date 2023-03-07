@@ -16,6 +16,7 @@ const handlerRequest = (req, res) => {
 
 	})
 	
+	//This is accepting a POST request
 	if(req.method === "POST") {
 		let body = ""
 	req.on("data", (data) => {
@@ -27,7 +28,17 @@ const handlerRequest = (req, res) => {
 		res.write(JSON.stringify(parsed))
 		res.end()
 	})
-	} else { // assuming GET
+	//This is a put request
+	} else if(req.method === "PUT") {
+		let body = ""
+	req.on("data", (data) => {
+		body += data
+	}) }else if(req.method === "DELETE") {
+		let body = ""
+	req.on("data", (data) => {
+		body += data
+	})
+	} else { // assuming it's a GET request
 		res.write(JSON.stringify(listOfThings))
 		res.end()
 	}
