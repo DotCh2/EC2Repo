@@ -27,22 +27,38 @@ const handlerRequest = (req, res) => {
 		listOfThings.push(parseData(body));
 		res.write(JSON.stringify(parsed))
 		res.end()
-	})
+	})//end of POST request
+
+
 	//This is a put request
 	} else if(req.method === "PUT") {
 		let body = ""
 	req.on("data", (data) => {
 		body += data
-	}) }else if(req.method === "DELETE") {
+	})
+	req.on("end", () => {
+		const parsed = parseData(body)
+		listOfThings.push(parseData(body));
+		res.write(JSON.stringify(parsed))
+		res.end()
+	}) //end of PUT request
+
+	//This is our DELETE request api
+	}else if(req.method === "DELETE") {
 		let body = ""
 	req.on("data", (data) => {
 		body += data
-	})
+	}) //end of DELETE request
+
+	//assuming GET as our request
 	} else { // assuming it's a GET request
 		res.write(JSON.stringify(listOfThings))
 		res.end()
-	}
-}
+
+	} //End of GET request
+
+} //End of handlerRequest
+
 
 // create the server and provide it the handler
 const server = http.createServer(handlerRequest);
