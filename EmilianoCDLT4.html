@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>Web Page App Part One</title>
+    <style>
+        div{margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+
+
+    <h1 style="text-align: center">Fill out the Forms</h1>
+
+    <div>
+    <form id="post" action="/api" method="POST">
+        <label>Name "POST Endpoint"</label>
+	<p>Creates a new user based of first name, last name, and age.</p>
+	<input type="text" placeholder="First Name:" name="fname" id="first"/>
+        <input type="text" placeholder="Last Name:" name="lname" id="last"/>
+        <input type="number" placeholder="Age" name="age" id="age"/>
+        <button type="submit">Submit Name and Age</button>
+    </form>
+    </div>
+    <hr>
+    <div>
+	<label>Link "GET Endpoint"</label>
+	<a href="EmilianoCDLT2.html" method="GET">Click Me</a>
+   </div>
+   <hr>
+
+   <!--
+    <div>
+        <form id="put" action="/api/users" method="PUT">
+            <label>Name "PUT Endpoint"</label>
+	    <p>This is update the first and last name along with the age <br> </p>
+            <input type="text" placeholder="First Name:" />
+            <input type="text" placeholder="Last Name:" />
+            <input type="number" placeholder="Age" />
+            <button type="submit">Submit Name and Age</button>
+        </form>
+
+    </div>
+    <hr>
+
+    <div>
+        <form id="delete" action="/api/users" method="DELETE">
+            <label>Age "DELETE Endpoint"</label>
+	    <p>Deletes the age of the person.</p>
+            <input type="number" placeholder="Age" />
+            <button type="submit">Submit Age</button>
+        </form>
+    </div>
+    <hr>
+   -->
+
+
+</body>
+</html>
