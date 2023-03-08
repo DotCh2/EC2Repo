@@ -33,26 +33,37 @@
 
     <div> 
         
-        <form action="/api" method="PUT">
+        <form action="/api" method="PUT" id="updateForm">
         <label>Enter the name that you want to change.</label>
         <input type="text" placeholder="First Name:" name="fname" id="first"/>
         <input type="text" placeholder="New Name:" name="fname" id="first"/>
         <button type="submit">Submit</button>
         </form>
         <script>
-           //Using the PUT method to change the first name of the user. Via fetch API.
-              const form = document.querySelector('form');
-                form.addEventListener('submit', (e) => {
-                e.preventDefault();
+          fetch('/api', {
+            method: 'PUT',
+            
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
+              document.getElementById("updateForm").value = data.first;
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+
+            document.getElementById("updateForm").addEventListener("submit", function(event){
+                event.preventDefault()
                 const data = new FormData(form);
-                const first = data.get('fname');
-                const user = {first, last, age};
+                const first = data.get('first');
+                const user = {first};
                 fetch('/api', {
                 method: 'PUT',
                 headers: {
                 'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(user)
+                body: FormData 
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -60,9 +71,10 @@
                 })
                 .catch((error) => {
                 console.error('Error:', error);
-                });
-            });
+                })
 
+
+            });
 
         </script>
         
