@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>Web Page App Part One</title>
+    <style>
+        div{margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+
+
+    <h1 style="text-align: center">Fill out the Forms</h1>
+
+    <div>
+    <form id="post" action="/api" method="POST">
+        <label>Name "POST Endpoint"</label>
+	    <p>Creates a new user based of first name, last name, and age.</p>
+	    <input type="text" placeholder="First Name:" name="fname" id="first"/>
+        <input type="text" placeholder="Last Name:" name="lname" id="last"/>
+        <input type="number" placeholder="Age" name="age" id="age"/>
+        <button type="submit">Submit Name and Age</button>
+    </form>
+    </div>
+    <hr>
+    <div>
+	<label>Link "GET Endpoint"</label>
+	<a href="EmilianoCDLT2.html" method="GET">Click Me</a>
+   </div>
+   <hr>
+
+    <div> 
+        
+        <form action="/api" method="PUT">
+        <label>Enter the name that you want to change.</label>
+        <input type="text" placeholder="First Name:" name="fname" id="first"/>
+        <input type="text" placeholder="New Name:" name="fname" id="first"/>
+        <button type="submit">Submit</button>
+        </form>
+        <script>
+           //Using the PUT method to change the first name of the user. Via fetch API.
+              const form = document.querySelector('form');
+                form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const data = new FormData(form);
+                const first = data.get('fname');
+                const user = {first, last, age};
+                fetch('/api', {
+                method: 'PUT',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+                })
+                .then(response => response.json())
+                .then(data => {
+                console.log('Success:', data);
+                })
+                .catch((error) => {
+                console.error('Error:', error);
+                });
+            });
+
+
+        </script>
+        
+    
+    </div>
+    
+
+
+</body>
+</html>
