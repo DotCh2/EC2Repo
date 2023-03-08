@@ -2,65 +2,54 @@
 
 // the above line will be important when we make this an executable service
 const http = require("http"); // import the http library from node
-const listOfThings = [] //Intilizing a globlal array
+const express = require('express'); // import the express library
+const app = express(); // create an instance of express
+const PORT = 3000; // the port we will listen on
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`)); // start the server
 
-//a function that converts a string 'key=value&key2=value2'into and object
-const parseData = (query) => Object.fromEntries(query.split("&").map(
-	(q) => q.split("=")))
+app.use(express.json()); // support json encoded bodies
 
-// request handler - I have no idea why I named it backward. Stage fright?
-const handlerRequest = (req, res) => {
-	res.writeHead(200, {
-		"Content-Type": "application/json",
+//This is just a test to see if the server is working
+const listOfThings = [
+	{ first:"John", last:"Doe", age:"22"},
+	{ first:"Jane", last:"Doe", age:"21"},
+	{ first:"John", last:"Smith", age:"23"}
 
+] 
 
-	})
-	
-	//This is accepting a POST request
-	if(req.method === "POST") {
-		let body = ""
-	req.on("data", (data) => {
-		body += data
-	})
-	req.on("end", () => {
-		const parsed = parseData(body)
-		listOfThings.push(parseData(body));
-		res.write(JSON.stringify(parsed))
-		res.end()
-	})//end of POST request
+//Creating a GET request to get all the things in the list of things
+app.get('/users', (req, res) => {
+	res.json(listOfThings);
+});
 
+//Making a POST request to add a new thing to the list of things
+app.post('/users', (req, res) => {
+	console.log(req.body);
+	listOfThings.push(req.body);
+	res.json(listOfThings);
+});
 
-	//This is a put request
-	} else if(req.method === "PUT") {
-		let body = ""
-	req.on("data", (data) => {
-		body += data
-	})
-	req.on("end", () => {
-		const parsed = parseData(body)
-		listOfThings.push(parseData(body));
-		res.write(JSON.stringify(parsed))
-		res.end()
-	}) //end of PUT request
+//Making a PUT request to update a thing in the list of things based on the first name 
+//of the user
+app.put('/users', (req, res) => {
+	console.log(req.body);
+	for (var i = 0; i < listOfThings.length; i++) {
+		if (listOfThings[i].fname == req.body.fname) {
+			listOfThings[i] = req.body;
+		}
+	}
+	res.json(listOfThings);
+});
 
-	//This is our DELETE request api
-	}else if(req.method === "DELETE") {
-		let body = ""
-	req.on("data", (data) => {
-		body += data
-	}) //end of DELETE request
+//Making a DELETE request to delete a thing in the list of things based on the first name
+app.delete('/users', (req, res) => {
+	console.log(req.body);
+	for (var i = 0; i < listOfThings.length; i++) {
+		if (listOfThings[i].fname == req.body.fname) {
+			listOfThings.splice(i, 1);
+		}
+	}
 
-	//assuming GET as our request
-	} else { // assuming it's a GET request
-		res.write(JSON.stringify(listOfThings))
-		res.end()
+	res.json(listOfThings);
+});
 
-	} //End of GET request
-
-} //End of handlerRequest
-
-
-// create the server and provide it the handler
-const server = http.createServer(handlerRequest);
-// instruct it to listen on TCP port 3000
-server.listen(3000);
