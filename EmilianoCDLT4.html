@@ -40,7 +40,30 @@
         <button type="submit">Submit</button>
         </form>
         <script>
-           
+           //Using the PUT method to change the first name of the user. Via fetch API.
+              const form = document.querySelector('form');
+                form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const data = new FormData(form);
+                const first = data.get('fname');
+                const user = {first, last, age};
+                fetch('/api', {
+                method: 'PUT',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+                })
+                .then(response => response.json())
+                .then(data => {
+                console.log('Success:', data);
+                })
+                .catch((error) => {
+                console.error('Error:', error);
+                });
+            });
+
+
         </script>
         
     
