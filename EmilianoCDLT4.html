@@ -40,27 +40,7 @@
         <button type="submit">Submit</button>
         </form>
         <script>
-            //Put request
-            const put = document.querySelector('form[action="/api"][method="PUT"]');
-            put.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const data = new FormData(put);
-                const first = data.get('fname');
-                const last = data.get('lname');
-                const age = data.get('age');
-                const body = {first, last, age};
-                fetch('/api', {
-                    method: 'PUT',
-                    body: JSON.stringify(body),
-                    headers: {
-                        'content-type': 'application/json'
-                    }
-                })
-                .then(res => res.json())
-                .then(response => console.log('Success:', JSON.stringify(response)))
-                .catch(error => console.error('Error:', error));
-            });
-
+           
         </script>
         
     
